@@ -1,3 +1,7 @@
+<div class="container mt-4 mb-4">
+    <a routerLink="/new-listing" class="btn btn-success">Create new Listing</a>
+    <hr/>
+</div>
 <div class="container" *ngFor="let listing of listings">
     <h3>{{ listing.name }}</h3>
     <p>{{ listing.description }}</p>
