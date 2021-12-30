@@ -26,8 +26,6 @@ export class ListingDataFormComponent implements OnInit {
       name: this.name,
       description: this.description,
       price: Number(this.price),
-    })
-    // alert(`Creating a new listing...`);
-    // this.router.navigateByUrl('/my-listings');
+    });
   }
 }
