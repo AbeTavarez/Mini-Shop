@@ -1,1 +1,28 @@
-<p>new-listing-page works!</p>
+<div class="container">
+    <h2>Create new listing</h2>
+
+    <form (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="name" class="form-label">
+                Name:
+            </label>
+            <input type="text" id="name" name="name" [(ngModel)]="name" class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">
+                Item Description:
+            </label>
+            <input type="text" id="description" name="description" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">
+                Item Price: 
+            </label>
+            <input type="text" id="price" name="price" class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-success">Create Listing</button>
+    </form>
+</div>
