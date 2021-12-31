@@ -5,11 +5,11 @@
 <div class="container" *ngFor="let listing of listings">
     <h3>{{ listing.name }}</h3>
     <p>{{ listing.description }}</p>
-    <p>{{ listing.price }}</p>
+    <p>${{ listing.price }}</p>
 
     <div>
         <a routerLink="/edit-listing/{{listing.id}}">
-            <button class="btn btn-info m-1">Edit</button>
+            <button class="btn btn-info me-3">Edit</button>
         </a>
         <button class="btn btn-danger" (click)="onDeleteClicked(listing.id)">Delete</button>
     </div>
