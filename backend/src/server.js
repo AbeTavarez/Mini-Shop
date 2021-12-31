@@ -1,4 +1,5 @@
-import Hapi, { server } from '@hapi/hapi';
+import Hapi from '@hapi/hapi';
+import routes from './routes'
 
 const start = async () => {
     const server = Hapi.server({
@@ -6,24 +7,9 @@ const start = async () => {
         host: 'localhost',
     });
 
-    //* Routes
-    // server.route({
-    //     method: 'GET',
-    //     path: '/',
-    //     handler: (req, h) => {
-    //         return h.response('Hello from Backend').code(200);
-    //     }
-    // });
-    server.route({
-        method: 'POST',
-        path: '/',
-        handler: (req, h) => {
-            const payload = req.payload;
-            const msg = payload.msg;
-            return `Message: ${msg}`;
-        }
-    });
-
+    //* Adds all Routes
+    routes.forEach(route => server.route(route))
+    
     await server.start()
     console.log(`Server is listening on ${server.info.uri}`);
 };
