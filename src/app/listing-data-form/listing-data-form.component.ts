@@ -7,18 +7,26 @@ import { Listing } from '../types';
   templateUrl: './listing-data-form.component.html',
   styleUrls: ['./listing-data-form.component.css'],
 })
+
 export class ListingDataFormComponent implements OnInit {
   @Input() buttonText;
+  @Input() currentName = '';
+  @Input() currentDescription = '';
+  @Input() currentPrice: number | undefined;
 
   name: string = '';
   description: string = '';
-  price: string = '';
+  price: number | undefined;
 
   @Output() onSubmit = new EventEmitter<Listing>();
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.name = this.currentName;
+    this.description = this.currentDescription;
+    this.price = this.currentPrice;
+  }
 
   onButtonClicked(): void {
     this.onSubmit.emit({
