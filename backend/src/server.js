@@ -7,14 +7,23 @@ const start = async () => {
     });
 
     //* Routes
+    // server.route({
+    //     method: 'GET',
+    //     path: '/',
+    //     handler: (req, h) => {
+    //         return h.response('Hello from Backend').code(200);
+    //     }
+    // });
     server.route({
-        method: 'GET',
+        method: 'POST',
         path: '/',
         handler: (req, h) => {
-            return h.response('Welcome').code(200);
+            const payload = req.payload;
+            const msg = payload.msg;
+            return `Message: ${msg}`;
         }
     });
-    
+
     await server.start()
     console.log(`Server is listening on ${server.info.uri}`);
 };
