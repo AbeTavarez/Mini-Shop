@@ -1,6 +1,7 @@
-import { dummyData } from './dummyData';
 import { db } from '../db';
 
+//* @ Gets all listings from database
+ 
 export const getAllListingsRoute = {
     method: 'GET',
     path: '/api/listings',
@@ -8,6 +9,7 @@ export const getAllListingsRoute = {
         const { results } = await db.query(
             'SELECT * FROM listings'
         );
+        // send back array of records
         return results;
     }
-}
+};
