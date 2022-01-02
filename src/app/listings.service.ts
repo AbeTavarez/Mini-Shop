@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { dummyData } from './dummy-data';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Listing } from './types';
 
 @Injectable({
@@ -7,9 +8,11 @@ import { Listing } from './types';
 })
 export class ListingsService {
 
-  constructor() { }
+  constructor(
+    private http:HttpClient
+  ) { }
 
-  getListings(): Listing[] {
-    return dummyData;
+  getListings(): Observable<Listing[]> {
+    return this.http.get<Listing[]>('/api/listings');
   }
-}
+};
