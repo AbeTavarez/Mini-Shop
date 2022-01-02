@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { dummyData } from '../dummy-data';
 import { Listing } from '../types';
+import { ListingsService } from '../listings.service';
 
 @Component({
   selector: 'app-listings-page',
@@ -10,10 +10,14 @@ import { Listing } from '../types';
 export class ListingsPageComponent implements OnInit {
   listings: Listing[] = [];
 
-  constructor() { }
+  constructor(
+    private listingsService: ListingsService
+  ) { }
 
   ngOnInit(): void {
-    this.listings = dummyData;
+    // when we get some data from getListings
+    // the subscribe func will set the class var listings to the listings we get from getListings;
+    this.listingsService.getListings().subscribe(listings => this.listings = listings)
   }
 
 }
