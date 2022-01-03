@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: AngularFireAuth) { }
 
   ngOnInit(): void {
   }
 
+  signInClicked(): void {
+    const provider = new GoogleAuthProvider();
+    this.auth.signInWithPopup(provider);
+  }
+
+  signOutClicked(): void {
+    this.auth.signOut();
+  }
 }

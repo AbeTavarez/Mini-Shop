@@ -25,7 +25,10 @@
     <button class="btn btn-outline-success" type="submit">Search</button>
   </form>
 
-  <a routerLink="">
-    <a class="nav-link">SIGNUP/SIGNIN</a>
-</a>
+  <div *ngIf="(auth.user | async)">
+    <button (click)="signOutClicked()" class="btn btn-primary mx-4">SIGNOUT</button>
+</div>
+  <div *ngIf="!(auth.user | async)">
+    <button (click)="signInClicked()" class="btn btn-primary mx-4">SIGNIN</button>
+</div>
 </div>
