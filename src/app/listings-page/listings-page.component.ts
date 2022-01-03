@@ -16,7 +16,8 @@ export class ListingsPageComponent implements OnInit {
 
   ngOnInit(): void {
     // when we get some data from getListings
-    // the subscribe func will set the class var listings to the listings we get from getListings;
+    // the subscribe func will set the class variable listings
+    // to the listings we get from getListings;
     this.listingsService.getListings().subscribe(listings => this.listings = listings)
   }
 
