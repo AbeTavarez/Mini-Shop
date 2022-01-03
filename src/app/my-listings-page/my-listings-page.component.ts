@@ -19,6 +19,9 @@ export class MyListingsPageComponent implements OnInit {
   }
 
   onDeleteClicked(listingId: string): void {
-    alert(`Deleting your listing with id ${listingId}`)
+   this.listingService.deleteListing(listingId)
+   .subscribe(() => {
+     this.listings = this.listings.filter(listing => listing.id !== listingId)
+   })
   }
 }
