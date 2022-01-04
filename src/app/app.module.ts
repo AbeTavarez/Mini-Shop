@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+// FireBase
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,7 +36,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    AngularFireAuth,
+    AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
