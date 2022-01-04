@@ -16,13 +16,14 @@
       type="text"
       id="description"
       name="description"
+      [(ngModel)]="description"
       class="form-control"
     />
   </div>
 
   <div class="mb-3">
     <label for="price" class="form-label"> Item Price: </label>
-    <input type="text" id="price" name="price" class="form-control" />
+    <input type="text" id="price" name="price" [(ngModel)]="price" class="form-control" />
   </div>
 
   <button type="submit" class="btn btn-success" inputText>{{ buttonText}}</button>
