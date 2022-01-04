@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Listing } from './types';
+import { AngularFireAuth } from '@angular/fire/compat/auth'
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -9,11 +10,21 @@ const httpOptions = {
   }),
 };
 
+const httpOptionsWithAuthToken = token => ({
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'AuthToken': token
+  }),
+});
+
 @Injectable({
   providedIn: 'root',
 })
 export class ListingsService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private auth: AngularFireAuth,
+    ) {}
 
   // ============= Gets all Listings
   getListings(): Observable<Listing[]> {
@@ -36,7 +47,23 @@ export class ListingsService {
 
   // ============ Get all listings for a specific user
   getListingsForUser(): Observable<Listing[]> {
-    return this.http.get<Listing[]>('/api/users/12345/listings');
+    {
+      return new Observable<Listing[]>(observer => {
+        // gets user and token then make http request finally return listings
+        this.auth.user.subscribe(user => {
+          user && user.getIdToken().then(token => {
+            if (user && token) {
+              this.http.get<Listing[]>(`/api/users/${user.uid}/listings`, httpOptionsWithAuthToken(token))
+              .subscribe(listings => {
+                observer.next(listings)
+              });
+            } else {
+              observer.next([]);
+            }
+          })
+        })
+      })
+    }
   }
 
   // ============ Deletes a listing
@@ -58,7 +85,7 @@ export class ListingsService {
   };
 
   // =========== Edit a listing
-  editListing(id: string,name: string, description: string, price: number): Observable<Listing> {
+  editListing(id: string, name: string, description: string, price: number): Observable<Listing> {
     return this.http.post<Listing>(
       `/api/listings/${id}`,
       httpOptions
