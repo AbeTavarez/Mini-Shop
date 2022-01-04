@@ -8,6 +8,7 @@ import { ListingsService } from '../listings.service';
   templateUrl: './edit-listing-page.component.html',
   styleUrls: ['./edit-listing-page.component.css'],
 })
+
 export class EditListingPageComponent implements OnInit {
   listing: Listing;
   constructor(
