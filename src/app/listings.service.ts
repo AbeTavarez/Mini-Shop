@@ -72,23 +72,32 @@ export class ListingsService {
   }
 
   // =========== Creates a new Listing
-  createListing(
-    name: string,
-    description: string,
-    price: number
-  ): Observable<Listing> {
-    return this.http.post<Listing>(
-      `/api/listings`,
-      { name, description, price },
-      httpOptions
-    );
+  createListing(name: string, description: string, price: number): Observable<Listing> {
+    return new Observable<Listing>(observer => {
+      this.auth.user.subscribe(user => {
+        user && user.getIdToken().then(token => {
+          this.http.post<Listing>(
+            `/api/listings`,
+            { name, description, price },
+            httpOptionsWithAuthToken(token),
+          ).subscribe(() => observer.next());
+        })
+      })
+    })
+
   };
 
   // =========== Edit a listing
   editListing(id: string, name: string, description: string, price: number): Observable<Listing> {
-    return this.http.post<Listing>(
-      `/api/listings/${id}`,
-      httpOptions
-    )
+    return new Observable<Listing>(observer => {
+      this.auth.user.subscribe(user => {
+        user && user.getIdToken().then(token => {
+          return this.http.post<Listing>(
+            `/api/listings/${id}`,
+            httpOptionsWithAuthToken(token),
+          ).subscribe(() => observer.next());
+        })
+      })
+    });
   }
 }
