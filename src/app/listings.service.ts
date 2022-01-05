@@ -68,8 +68,15 @@ export class ListingsService {
 
   // ============ Deletes a listing
   deleteListing(id: string): Observable<any> {
-    return this.http.delete(`/api/listings/${id}`);
-  }
+    return new Observable<any>(observer => {
+      this.auth.user.subscribe(user => {
+        user && user.getIdToken().then(token => {
+          this.http.delete(`/api/listings/${id}`, httpOptionsWithAuthToken(token))
+          .subscribe(() => observer.next());
+        })
+      })
+    })
+  };
 
   // =========== Creates a new Listing
   createListing(name: string, description: string, price: number): Observable<Listing> {
@@ -92,7 +99,7 @@ export class ListingsService {
     return new Observable<Listing>(observer => {
       this.auth.user.subscribe(user => {
         user && user.getIdToken().then(token => {
-          return this.http.post<Listing>(
+          this.http.post<Listing>(
             `/api/listings/${id}`,
             httpOptionsWithAuthToken(token),
           ).subscribe(() => observer.next());
@@ -100,4 +107,4 @@ export class ListingsService {
       })
     });
   }
-}
+};
